@@ -1,0 +1,13 @@
+
+
+/* Chapter/verse numbers */
+.chapter_no {
+    font-size: 1.5em;
+
+}
+
+.verse_no {
+    font-size: .83em;
+    vertical-align: super;
+}
+
