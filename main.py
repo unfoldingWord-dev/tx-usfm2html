@@ -1,6 +1,6 @@
 import sys
 
-from html.render_html import HtmlVisitor
+from render_html.html_visitor import HtmlVisitor
 from usfm import lex, parse
 
 

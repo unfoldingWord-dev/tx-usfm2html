@@ -6,7 +6,7 @@ import unittest
 from elements.abstract_elements import Element
 from elements.element_impls import ChapterNumber, Paragraph, FormattedText, Text, Heading, Whitespace
 from elements.paragraph_utils import LeftAligned
-import test_utils
+from tests import test_utils
 from usfm.lex import UsfmLexer
 from usfm.flags import paragraphs, indented_paragraphs, lower_open_closes, higher_open_closes, headings, \
     higher_rest_of_lines, lower_until_next_flags, whitespace
