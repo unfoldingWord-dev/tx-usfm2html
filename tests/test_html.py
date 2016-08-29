@@ -3,9 +3,9 @@ import unittest
 
 from elements.document import Document
 from elements.element_impls import FormattedText, Text, Paragraph
-from html.render_html import HtmlVisitor, non_span_formatting
+from render_html.html_visitor import HtmlVisitor, non_span_formatting
 
-import test_utils
+from tests import test_utils
 
 
 class HtmlRenderingTest(unittest.TestCase):
@@ -64,7 +64,6 @@ class HtmlRenderingTest(unittest.TestCase):
                 self.assertIn("introductory", rendered)
             else:
                 self.assertNotIn("introductory", rendered)
-
 
     class TestFile(object):
         """

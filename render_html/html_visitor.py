@@ -2,7 +2,7 @@ from elements.document import Document
 from elements.element_impls import FormattedText, ChapterNumber, Whitespace
 from elements.element_visitor import ElementVisitor
 from elements.paragraph_utils import ParagraphLayoutVisitor
-from html.html_utils import open_tag, close_tag, open_span, close_span, add_class
+from render_html.html_utils import open_tag, close_tag, open_span, close_span, add_class
 
 
 class HtmlVisitor(ElementVisitor):
@@ -172,16 +172,16 @@ non_span_formatting = {
 
 
 def html_header(title=""):
-    return u"""<!DOCTYPE html>
+    return u"""<!DOCTYPE render_html>
         <meta charset=\"utf-8\">
         <head>
         <title>{title}</title>
         <link rel=\"stylesheet\" href=\"default.css\">
         </head>
-        <html>
+        <render_html>
         <body>
         """.format(title=title)
 
 
 def html_footer():
-    return """</body></html>"""
+    return """</body></render_html>"""
