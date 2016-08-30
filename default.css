@@ -1,13 +1,123 @@
-
-
 /* Chapter/verse numbers */
 .chapter_no {
-    font-size: 1.5em;
-
-}
+  font-size: 1.5em; }
 
 .verse_no {
-    font-size: .83em;
-    vertical-align: super;
-}
+  font-size: .65em;
+  vertical-align: super; }
 
+/* Indents */
+.left_margin_1 {
+  margin-left: 1em; }
+
+.left_margin_2 {
+  margin-left: 2em; }
+
+.left_margin_3 {
+  margin-left: 3em; }
+
+.left_margin_4 {
+  margin-left: 4em; }
+
+.left_margin_5 {
+  margin-left: 5em; }
+
+.left_margin_6 {
+  margin-left: 6em; }
+
+.first_line_default {
+  text-indent: 1em; }
+
+.first_line_none {
+  text-indent: 0em; }
+
+.first_line_outdent {
+  padding-left: 1em;
+  text-indent: -1em; }
+
+/* Heading weights */
+h1.major_section {
+  font-size: 1.25em;
+  font-weight: bold; }
+
+h1.section {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 1em; }
+
+h2.major_title {
+  font-style: italic; }
+
+h2.major_title_end {
+  font-style: italic; }
+
+h2.major_section {
+  font-size: 1em;
+  font-weight: bold; }
+
+h2.section {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 1em; }
+
+h3.major_title {
+  font-style: italic; }
+
+h3.major_title_end {
+  font-style: italic; }
+
+h3.major_section {
+  font-size: 1em;
+  font-weight: bold; }
+
+h3.section {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 1em; }
+
+h4.major_title {
+  font-style: italic; }
+
+h4.major_title_end {
+  font-style: italic; }
+
+h4.major_section {
+  font-size: 1em;
+  font-weight: bold; }
+
+h4.section {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 1em; }
+
+h5.major_title {
+  font-style: italic; }
+
+h5.major_title_end {
+  font-style: italic; }
+
+h5.major_section {
+  font-size: 1em;
+  font-weight: bold; }
+
+h5.section {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 1em; }
+
+h6.major_title {
+  font-style: italic; }
+
+h6.major_title_end {
+  font-style: italic; }
+
+h6.major_section {
+  font-size: 1em;
+  font-weight: bold; }
+
+h6.section {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 1em; }
+
+/*# sourceMappingURL=default.css.map */

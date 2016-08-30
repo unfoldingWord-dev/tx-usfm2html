@@ -1,5 +1,5 @@
 from elements.document import Document
-from elements.element_impls import FormattedText, ChapterNumber, Whitespace
+from elements.element_impls import FormattedText, ChapterNumber, Whitespace, Heading
 from elements.element_visitor import ElementVisitor
 from elements.paragraph_utils import ParagraphLayoutVisitor
 from render_html.html_utils import open_tag, close_tag, open_span, close_span, add_class
@@ -97,13 +97,13 @@ class HtmlVisitor(ElementVisitor):
             self.record(close_span())
 
     def before_heading(self, heading):
-        flag = "h" + str(heading.weight)
-        clazz = heading.kind.name
-        self.record(open_tag(flag, clazz=clazz))
+        tag = "h" + str(heading.weight)
+        self.record(open_tag(tag, clazz=heading.kind.name))
 
     def after_heading(self, heading):
-        flag = "h" + str(heading.weight)
-        self.record(close_tag(flag))
+        tag = "h" + str(heading.weight)
+        self.record(close_tag(tag))
+        self.record("\n")
 
     def before_other(self, other):
         clazz = other.kind.name
@@ -172,17 +172,19 @@ non_span_formatting = {
 }
 
 
-def html_header(title=""):
-    return u"""<!DOCTYPE render_html>
-        <meta charset=\"utf-8\">
-        <head>
-        <title>{title}</title>
-        <link rel=\"stylesheet\" href=\"default.css\">
-        </head>
-        <render_html>
-        <body>
-        """.format(title=title)
+def html_header(title=None):
+    title = u"" if title is None else title
+    return u"<!DOCTYPE render_html>\n"\
+        u"<meta charset=\"utf-8\">"\
+        u"<head>\n"\
+        u"<title>{title}</title>\n"\
+        u"<link rel=\"stylesheet\" href=\"default.css\">\n"\
+        u"</head>\n"\
+        u"<render_html>\n"\
+        u"<body>\n"\
+        .format(title=title)
 
 
 def html_footer():
-    return """</body></render_html>"""
+    return u"</body>\n"\
+        u"</render_html>"

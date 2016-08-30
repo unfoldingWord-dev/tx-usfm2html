@@ -1,0 +1,73 @@
+
+/* Chapter/verse numbers */
+
+.chapter_no {
+    font-size: 1.5em;
+
+}
+
+.verse_no {
+    font-size: .75em;
+    vertical-align: super;
+}
+
+/* Indents */
+
+$indents: (1, 2, 3, 4, 5, 6);
+
+@each $indent in $indents {
+    .left_margin_#{$indent} {
+        margin-left: $indent * 1em;
+    }
+}
+
+.first_line_default {
+    text-indent: 1em;
+}
+
+.first_line_none {
+    text-indent: 0em;
+}
+
+.first_line_outdent {
+    padding-left: 1em;
+    text-indent: -1em;
+}
+
+/* Heading weights */
+
+$weights: (1, 2, 3, 4, 5, 6);
+
+@each $weight in $weights {
+    h#{$weight}.major_title {
+        @if $weight > 1 {
+            font-style: italic;
+        }
+    }
+
+    h#{$weight}.major_title_end {
+        @if $weight > 1 {
+            font-style: italic;
+        }
+    }
+
+    h#{$weight}.major_section {
+        @if $weight == 1 {
+            font-size: 1.25em;
+        } @else {
+            font-size: 1em;
+        }
+        font-weight: bold;
+    }
+
+    h#{$weight}.section {
+        @if $weight == 1 {
+            font-weight: bold;
+            font-style: normal;
+        } @else {
+            font-weight: normal;
+            font-style: italic;
+        }
+        font-size: 1em;
+    }
+}
