@@ -6,7 +6,7 @@ from elements.footnote_utils import AutomaticFootnoteLabel, NoFootnoteLabel, \
     CustomFootnoteLabel
 from usfm.escape_text import escape_text, unescape_text
 from usfm.flags import paragraphs, indented_paragraphs, lower_open_closes, higher_open_closes, headings, one_word_arguments, \
-    higher_rest_of_lines, lower_until_next_flags, whitespace, ignore_rest_of_lines
+    higher_rest_of_lines, lower_until_next_flags, whitespace, ignore_rest_of_lines, footnotes
 from usfm.lex_utils import standalone, open_token, close_token, one_arg, \
     until_next_flag, rest_of_line, open_token_regex, FLAG_PREFIX, scale, \
     scale_and_rest_of_line
@@ -38,6 +38,15 @@ class UpdateablePosition(object):
                 self._col = self._index_from
             else:
                 self._col += 1
+
+
+def lex_open_footnote(flag):
+    def lex_open_footnote_inner(token):
+        token.value = Token.Builder(token.value)
+        token.lexer.begin("footnotelabel")
+        return token
+    lex_open_footnote_inner.__doc__ = open_token_regex(flag)
+    return lex_open_footnote_inner
 
 
 class UsfmLexer(object):
@@ -115,25 +124,23 @@ class UsfmLexer(object):
         for name, (flag, _) in lower_until_next_flags.items():
             self.register(name, until_next_flag(flag))
 
-        def open_footnote(token):
-            token.lexer.begin("footnotelabel")
-            return token
-        open_footnote.__doc__ = open_token_regex("f")
-        self.register("OPEN_FOOTNOTE", open_footnote)
+        for name, (flag, _) in footnotes.items():
+            self.register("OPEN_" + name, lex_open_footnote(flag))
+            self.register("CLOSE_" + name, close_token(flag))
 
         def footnote_label(token):
             marker = token.value
             if marker == "+":
-                token.value = AutomaticFootnoteLabel()
+                token.value = Token.Builder(AutomaticFootnoteLabel())
             elif marker == "-":
-                token.value = NoFootnoteLabel()
+                token.value = Token.Builder(NoFootnoteLabel())
             else:
-                token.value = CustomFootnoteLabel(marker)
+                token.value = Token.Builder(CustomFootnoteLabel(marker))
+
             token.lexer.begin("INITIAL")
             return token
         footnote_label.__doc__ = r"[^\s{prefix}]+".format(prefix=FLAG_PREFIX)
         self.register("FOOTNOTE_LABEL", footnote_label, "footnotelabel")
-        self.register("CLOSE_FOOTNOTE", close_token("f"))
 
         for name, (flag, _) in whitespace.items():
             self.register(name, standalone(flag))

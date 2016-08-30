@@ -4,12 +4,13 @@ import random
 import unittest
 
 from elements.abstract_elements import Element
-from elements.element_impls import ChapterNumber, Paragraph, FormattedText, Text, Heading, Whitespace
+from elements.document import Document
+from elements.element_impls import ChapterNumber, Paragraph, FormattedText, Text, Heading, Whitespace, Footnote
 from elements.paragraph_utils import LeftAligned
 from tests import test_utils
-from usfm.lex import UsfmLexer
 from usfm.flags import paragraphs, indented_paragraphs, lower_open_closes, higher_open_closes, headings, \
-    higher_rest_of_lines, lower_until_next_flags, whitespace
+    higher_rest_of_lines, lower_until_next_flags, whitespace, footnotes
+from usfm.lex import UsfmLexer
 from usfm.parse import UsfmParser
 
 
@@ -189,8 +190,26 @@ class UsfmParserTests(unittest.TestCase):
         self.assertEqual(len(elements), 1)
 
 
-def test_other():
-    print("hello")
+    def test_footnotes(self):
+        for name, (flag, kind) in footnotes.items():
+            word = test_utils.word()
+            paragraph_flag = random.choice(["p", "m", "pi", "ipr"])
+            lines = (
+                r"\{}".format(paragraph_flag),
+                r"\{f} + {w} \{f}*".format(f=flag, w=word)
+            )
+            document = self.parse(*lines)
+            self.assertIsNone(document.heading)
+            elements = document.elements
+            self.assertEqual(len(elements), 1)
+            paragraph = elements[0]
+            self.assertIsInstance(paragraph, Paragraph)
+            children = paragraph.children
+            self.assertEqual(len(children), 1)
+            footnote = children[0]
+            self.assertIsInstance(footnote, Footnote)
+            self.assertEqual(footnote.kind, kind)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=0)

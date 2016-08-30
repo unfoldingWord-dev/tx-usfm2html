@@ -10,7 +10,8 @@ In general, a constructor of None means that a particular flag has special funct
 and needs to be handled separately during parsing
 """
 
-from elements.element_impls import Paragraph, FormattedText, ChapterNumber, OtherText, Text, Heading, Whitespace
+from elements.element_impls import Paragraph, FormattedText, ChapterNumber, OtherText, Text, Heading, Whitespace, \
+    Footnote
 from elements.paragraph_utils import Centered, LeftAligned, RightAligned
 
 
@@ -172,6 +173,13 @@ lower_until_next_flags = {
     "FOOTNOTE_QUOTATION": ("fq", FormattedText.Kind.footnote_quotation.construct),
     "FOOTNOTE_REFERENCE": ("fr", FormattedText.Kind.footnote_reference.construct),
     "FOOTNOTE_VERSE": ("fv", FormattedText.Kind.footnote_verse.construct)
+}
+
+# TOKEN_NAME: (flag, Footnote.Kind)
+footnotes = {
+    "FOOTNOTE": ("f", Footnote.Kind.footnote),
+    "ENDNOTE": ("fe", Footnote.Kind.endnote),
+    "CROSS_REFERENCE": ("x", Footnote.Kind.cross_reference)
 }
 
 

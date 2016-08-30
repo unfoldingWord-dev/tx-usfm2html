@@ -249,12 +249,13 @@ class ChapterNumber(KindedElement, ParentElement):
             return ChapterNumber(self, children)
 
 
-class Footnote(ParentElement):
-    def __init__(self, children, label):
+class Footnote(KindedElement, ParentElement):
+    def __init__(self, kind, children, label):
         """
         :param Iterable[Element] children:
         :param FootnoteLabel label:
         """
+        KindedElement.__init__(self, kind)
         ParentElement.__init__(self, children)
         assert(isinstance(label, FootnoteLabel))
         self._label = label
@@ -267,6 +268,12 @@ class Footnote(ParentElement):
         visitor.before_footnote(self)
         self.visit_children(visitor)
         visitor.after_footnote(self)
+
+    @enum.unique
+    class Kind(enum.Enum):
+        footnote = 1
+        endnote = 2
+        cross_reference = 3
 
 
 class Whitespace(KindedElement):

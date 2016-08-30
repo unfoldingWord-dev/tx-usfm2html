@@ -85,8 +85,6 @@ def unary_rule(f, index, extract=False):
 
 
 
-
-
 class UsfmParser(object):
     start = "document"
 
@@ -263,7 +261,15 @@ class UsfmParser(object):
 
     def p_footnote(self, t):
         """lower_element : OPEN_FOOTNOTE FOOTNOTE_LABEL lower_elements CLOSE_FOOTNOTE"""
-        t[0] = Footnote(t[3], t[2].value)
+        t[0] = Footnote(Footnote.Kind.footnote, t[3], t[2].value)
+
+    def p_endnote(self, t):
+        """lower_element : OPEN_ENDNOTE FOOTNOTE_LABEL lower_elements CLOSE_ENDNOTE"""
+        t[0] = Footnote(Footnote.Kind.endnote, t[3], t[2].value)
+
+    def p_cross_reference(self, t):
+        """lower_element : OPEN_CROSS_REFERENCE FOOTNOTE_LABEL lower_elements CLOSE_CROSS_REFERENCE"""
+        t[0] = Footnote(Footnote.Kind.cross_reference, t[3], t[2].value)
 
     def p_error(self, token):
         msg = "Unexpected token: {} of type {} at {}".format(
