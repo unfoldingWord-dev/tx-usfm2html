@@ -2,7 +2,8 @@ import itertools
 import unittest
 
 from elements.document import Document
-from elements.element_impls import FormattedText, Text, Paragraph
+from elements.element_impls import FormattedText, Text, Paragraph, Footnote
+from elements.footnote_utils import AutomaticFootnoteLabel
 from render_html.html_visitor import HtmlVisitor, non_span_formatting
 
 from tests import test_utils
@@ -20,6 +21,15 @@ class HtmlRenderingTest(unittest.TestCase):
         visitor = HtmlVisitor(test_file)
         visitor.write(document)
         return test_file.content()
+
+    def test_footnotes(self):
+        for kind in list(Footnote.Kind):
+            word = test_utils.word()
+            footnote = Footnote(kind, [Text(word)], AutomaticFootnoteLabel())
+            paragraph = Paragraph([footnote])
+            rendered = self.render_elements(paragraph)
+            self.assertIn(kind.name, rendered)
+            self.assertIn(word, rendered)
 
     def test_formatted_text(self):
         for kind in list(FormattedText.Kind):

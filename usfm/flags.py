@@ -99,9 +99,14 @@ lower_open_closes = {
     "BOLD_AND_ITALICS": ("bdit", lambda children: FormattedText(
         FormattedText.Kind.bold, [FormattedText(FormattedText.Kind.italics, children)])),
     "BOOK_TITLE": ("bk", FormattedText.Kind.book_title.construct),
+    "CROSS_REF_DEUTEROCANONICAL": ("xdc", FormattedText.Kind.deuterocanonical.construct),
+    "CROSS_REF_NEW_TESTAMENT": ("xnt", FormattedText.Kind.footnote_new_testament.construct),
+    "CROSS_REF_OLD_TESTAMENT": ("xot", FormattedText.Kind.footnote_old_testament.construct),
     "DEUTEROCANONICAL": ("dc", FormattedText.Kind.deuterocanonical.construct),
     "EMPHASIS": ("em", FormattedText.Kind.emphasis.construct),
+    "FOOTNOTE_DEUTEROCANONICAL": ("fdc", FormattedText.Kind.deuterocanonical.construct),
     "FOOTNOTE_REFERENCE_MARK": ("fm", FormattedText.Kind.footnote_reference_mark.construct),
+
     "ITALICS": ("it", FormattedText.Kind.italics.construct),
     "KEYWORD": ("k", FormattedText.Kind.keyword.construct),
     "NAME_OF_GOD": ("nd", FormattedText.Kind.name_of_god.construct),
@@ -167,12 +172,18 @@ ignore_rest_of_lines = {
 
 # TOKEN_NAME: (flag, callable[children -> Element])
 lower_until_next_flags = {
+    # footnotes
     "FOOTNOTE_ALT_QUOTATION": ("fqa", FormattedText.Kind.footnote_alternate_quotation.construct),
     "FOOTNOTE_KEYWORD": ("fk", FormattedText.Kind.footnote_keyword.construct),
     "FOOTNOTE_TEXT": ("ft", FormattedText.Kind.no_effect.construct),
     "FOOTNOTE_QUOTATION": ("fq", FormattedText.Kind.footnote_quotation.construct),
     "FOOTNOTE_REFERENCE": ("fr", FormattedText.Kind.footnote_reference.construct),
-    "FOOTNOTE_VERSE": ("fv", FormattedText.Kind.footnote_verse.construct)
+    "FOOTNOTE_VERSE": ("fv", FormattedText.Kind.footnote_verse.construct),
+
+    # cross-references
+    "CROSS_REF_ORIGIN": ("xo", FormattedText.Kind.footnote_origin.construct),
+    "CROSS_REF_KEYWORD": ("xk", FormattedText.Kind.footnote_keyword.construct),
+    "CROSS_REF_QUOTATION": ("xq", FormattedText.Kind.footnote_quotation.construct)
 }
 
 # TOKEN_NAME: (flag, Footnote.Kind)

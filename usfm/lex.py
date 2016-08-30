@@ -17,7 +17,6 @@ from usfm.tokens import Position, Token
 # unimplemented USFM tags:
 # - nb
 # - tables
-# - cross-references
 # - images
 
 

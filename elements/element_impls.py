@@ -70,9 +70,13 @@ class FormattedText(KindedElement, ParentElement):
         footnote_alternate_quotation = next(c)
         footnote_keyword = next(c)
         footnote_label = next(c)
+        footnote_new_testament = next(c)
+        footnote_old_testament = next(c)
+        footnote_origin = next(c)
         footnote_quotation = next(c)
         footnote_reference = next(c)
         footnote_reference_mark = next(c)
+        footnote_target = next(c)
         footnote_verse = next(c)
 
         # poetry

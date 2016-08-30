@@ -74,10 +74,10 @@ class HtmlVisitor(ElementVisitor):
         footnote_id = self._next_footnote_id
         self._next_footnote_id = footnote_id + 1
         self.record("<sup><a href=\"#fn{id}\" id=\"ref{id}\">{id}</a></sup>".format(id=footnote_id))
-        entry = HtmlVisitor.Entry(footnote_id)
+        entry = HtmlVisitor.Entry(footnote_id, footnote.kind)
         self._accumulated_footnotes.append(entry)
         self._current_footnotes.append(entry)
-        self.record(open_span(identifier="fn{id}".format(id=footnote_id)))
+        self.record(open_span(clazz=footnote.kind.name, identifier="fn{id}".format(id=footnote_id)))
 
     def after_footnote(self, footnote):
         entry = self._current_footnotes.pop()
@@ -125,8 +125,9 @@ class HtmlVisitor(ElementVisitor):
             raise ValueError("Unrecognized whitespace: {}".format(kind))
 
     class Entry(object):
-        def __init__(self, identifier):
+        def __init__(self, identifier, kind):
             self._identifier = identifier
+            self._kind = kind
             self._content = ""
 
         @property
