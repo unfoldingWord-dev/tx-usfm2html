@@ -1,22 +1,11 @@
 Master:
-
-.. image:: https://travis-ci.org/unfoldingWord-dev/tx-usfm2html.svg?branch=master
-    :alt: Master Build Status
-    :target: https://travis-ci.org/unfoldingWord-dev/tx-usfm2html
-
-.. image:: https://img.shields.io/coveralls/unfoldingWord-dev/tx-usfm2html/master.svg
-    :alt: Master Coverage
-    :target: https://coveralls.io/github/unfoldingWord-dev/tx-usfm2html?branch=master
+[![Build Status](https://travis-ci.org/unfoldingWord-dev/tx-usfm2html.svg?branch=master)](https://travis-ci.org/unfoldingWord-dev/tx-usfm2html) [![Coverage Status](https://coveralls.io/repos/github/unfoldingWord-dev/tx-usfm2html/badge.svg?branch=master)](https://coveralls.io/github/unfoldingWord-dev/tx-usfm2html?branch=master)
 
 Develop:
+[![Build Status](https://travis-ci.org/unfoldingWord-dev/tx-usfm2html.svg?branch=develop)](https://travis-ci.org/unfoldingWord-dev/tx-usfm2html) [![Coverage Status](https://coveralls.io/repos/github/unfoldingWord-dev/tx-usfm2html/badge.svg?branch=develop)](https://coveralls.io/github/unfoldingWord-dev/tx-usfm2html?branch=develop)
 
-.. image:: https://travis-ci.org/unfoldingWord-dev/tx-usfm2html.svg?branch=develop
-    :alt: Develop Build Status
-    :target: https://travis-ci.org/unfoldingWord-dev/tx-usfm2html
+# tx-usfm2html
 
-.. image:: https://img.shields.io/coveralls/unfoldingWord-dev/tx-usfm2html/develop.svg
-    :alt: Develop Coverage
-    :target: https://coveralls.io/github/unfoldingWord-dev/tx-usfm2html?branch=develop
+General project specification at https://github.com/unfoldingWord-dev/door43.org/wiki/tX-Development-Architecture#tx-conversion-modules
 
-tx-usfm2html
-============
+Issue for its creation at https://github.com/unfoldingWord-dev/door43.org/issues/46
