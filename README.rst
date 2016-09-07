@@ -20,3 +20,7 @@ Develop:
 
 tx-usfm2html
 ============
+
+`Project specification <https://github.com/unfoldingWord-dev/door43.org/wiki/tX-Development-Architecture#tx-conversion-modules>`_
+
+`Issue <https://github.com/unfoldingWord-dev/door43.org/issues/46`_
