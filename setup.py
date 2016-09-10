@@ -11,7 +11,7 @@ with open(path.join(here, "README.rst"), "r") as f:
 setup(
     name="tx-usfm2html",
     version="1.0.0",
-    description="A python library for USFM-to-HTML conversion",
+    description="USFM-to-HTML conversion",
     long_description=long_description,
     url="https://github.com/unfoldingWord-dev/tx-usfm2html",
     author="unfoldingWord",
