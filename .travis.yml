@@ -1,6 +1,7 @@
 language: python
 python:
 - '2.7'
+- '3.3'
 - '3.4'
 - '3.5'
 install:
@@ -16,6 +17,7 @@ deploy:
   script: "apex deploy"
   on:
     branch: master
+    python: '2.7'
 env:
   global:
   - secure: Jw3KVGdmgqWlVkiPBYcCCwUF6RqNWwKZ1vpH0T4P7nHSIjpYau3JR6fDw4WkJeVBOcE9H232LN1MpIH4nWlJ6fu5jigu/qDWqZlRXU79NtyMbFizfXFGLBXfr113PqfCp2mosiC44QFku0G/cBN7w57JRL1mn9KLSGxfHwvXd3BVA290yV4IFz+8RPvjp34N/3kWHk00UH/XW1FEkVC2wUiVIo6pbSVRXeYwmLGqqqqQp+rX75z4OPwtVfu6j86cEfmkn6UK5ZSPiyl8M3SVLCG9XfClPlh05G4h9pDjlA7Gkqx1+Q3xDGR74d3QQ6Kvmod+u6IVEnafpdq44OUadBR5ByAeZyV+3gO+b4DhZvpLxw8C3DtWTYVATKDInUMQkU+XXe40L/QGvvQ8HhWtkYA1U6cR1+oeUPSOB0+cBEnQezHnBgv9IapiNT16IPkEtnttOwGBXdw9giXTwjWh/xlmbRS7tgoVydCJ8msmkoo2W/9fHFwXejvnp11kvWabPHO8t+9wLwa8fasj8uN4Eqk4SemfE9hOc+O846OUIUmaeXhNvhL0erNkeax5qEwbq5iLcwE/C90G5L5BzlLPHuLlD3X2x1OxlZA/cjCBIJ06rh71BjE0TogcAfLhiCIA9hjI+AqBJDulGv1fxBpZgq/O942HS7Z9pURkhACNgU4=
