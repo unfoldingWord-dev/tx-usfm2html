@@ -3,18 +3,21 @@
 from __future__ import print_function, unicode_literals
 
 import os
+import os.path
+import shutil
 import tempfile
 import zipfile
+from contextlib import closing
 from glob import glob
 
-from contextlib import closing
-from future.moves.urllib.request import urlopen
-import shutil
-
 import boto3
+from future.moves.urllib.request import urlopen
 from general_tools.file_utils import unzip
 
 from convert import convert
+
+here = os.path.abspath(os.path.dirname(__file__))
+DEFAULT_CSS = os.path.join(here, "default.css")
 
 
 def handle(event, context):
@@ -22,8 +25,10 @@ def handle(event, context):
     job = retrieve(data, "job", "\"data\"")
     # source: URL of zip archive of input USFM files
     source = retrieve(job, "source", "\"job\"")
-    # stylesheets: list of CSS filenames
-    stylesheets = [] if "stylesheets" not in job else job["stylesheets"]
+    # stylesheets: (optional) list of CSS filenames
+    stylesheets = [DEFAULT_CSS]
+    if "stylesheets" in job:
+        stylesheets += job["stylesheets"]
     cdn_bucket = retrieve(data, "cdn_bucket", "\"data\"")
     cdn_file = retrieve(data, "cdn_file", "\"data\"")
 
@@ -44,6 +49,7 @@ def handle(event, context):
 
     zip_file = os.path.join(tempfile.gettempdir(), context.aws_request_id+'.zip')
     with zipfile.ZipFile(zip_file, "w") as zf:
+        zf.write(DEFAULT_CSS)
         for filename in outputs:
             zf.write(filename, os.path.basename(filename))
 
