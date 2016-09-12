@@ -22,6 +22,8 @@ def handle(event, context):
     job = retrieve(data, "job", "\"data\"")
     # source: URL of zip archive of input USFM files
     source = retrieve(job, "source", "\"job\"")
+    # stylesheets: list of CSS filenames
+    stylesheets = [] if "stylesheets" not in job else job["stylesheets"]
     cdn_bucket = retrieve(data, "cdn_bucket", "\"data\"")
     cdn_file = retrieve(data, "cdn_file", "\"data\"")
 
@@ -38,7 +40,7 @@ def handle(event, context):
     unzip(downloaded_file, directory)
 
     inputs = glob(os.path.join(directory, '*.usfm'))
-    outputs = convert(inputs, output_dir=directory)
+    outputs = convert(inputs, output_dir=directory, stylesheets=stylesheets)
 
     zip_file = os.path.join(tempfile.gettempdir(), context.aws_request_id+'.zip')
     with zipfile.ZipFile(zip_file, "w") as zf:

@@ -5,25 +5,29 @@ from usfm_utils.html import HtmlVisitor
 from usfm_utils.usfm import UsfmLexer, UsfmParser
 
 
-def convert(usfm_filenames, output_dir, input_encoding="utf-8"):
+def convert(usfm_filenames, output_dir, stylesheets=(), input_encoding="utf-8"):
     """
-    :param iterable[str] usfm_filenames: Filenames of USFM files
-    :param str input_encoding: Encoding of USFM files
-    :param str output_dir: Output directory for generated files
+    :param iterable[str|unicode] usfm_filenames: Filenames of USFM files
+    :param str|unicode input_encoding: Encoding of USFM files
+    :param str|unicode output_dir: Output directory for generated files
+    :param iterable[str|unicode] stylesheets: Stylesheet filenames
     :return: Filenames of output files
-    :rtype: list[str]
+    :rtype: list[str|unicode]
     """
     return [output for input_filename in usfm_filenames
             for output in convert_single(input_filename, output_dir,
+                                         stylesheets=stylesheets,
                                          input_encoding=input_encoding)]
 
-def convert_single(usfm_filename, output_dir, input_encoding="utf-8"):
+
+def convert_single(usfm_filename, output_dir, stylesheets=(), input_encoding="utf-8"):
     """
     :param str|unicode usfm_filename:
     :param str|unicode output_dir:
+    :param iterable[str|unicode] stylesheets:
     :param str|unicode input_encoding:
     :return: Filenames of output files
-    :rtype: list[str]
+    :rtype: list[str|unicode]
     """
     with codecs.open(usfm_filename, "r", encoding=input_encoding) as usfm_file:
         content = usfm_file.read()
@@ -39,6 +43,6 @@ def convert_single(usfm_filename, output_dir, input_encoding="utf-8"):
     output_filename = os.path.join(output_dir, output_basename)
 
     with codecs.open(output_filename, "w") as output_file:
-        HtmlVisitor(output_file).write(document)
+        HtmlVisitor(output_file, stylesheets=stylesheets).write(document)
 
     return [output_filename]
