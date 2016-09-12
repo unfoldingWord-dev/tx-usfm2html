@@ -26,7 +26,7 @@ def handle(event, context):
     # source: URL of zip archive of input USFM files
     source = retrieve(job, "source", "\"job\"")
     # stylesheets: (optional) list of CSS filenames
-    stylesheets = [DEFAULT_CSS]
+    stylesheets = [os.path.basename(DEFAULT_CSS)]
     if "stylesheets" in job:
         stylesheets += job["stylesheets"]
     cdn_bucket = retrieve(data, "cdn_bucket", "\"data\"")
@@ -49,7 +49,7 @@ def handle(event, context):
 
     zip_file = os.path.join(tempfile.gettempdir(), context.aws_request_id+'.zip')
     with zipfile.ZipFile(zip_file, "w") as zf:
-        zf.write(DEFAULT_CSS)
+        zf.write(DEFAULT_CSS, os.path.basename(DEFAULT_CSS))
         for filename in outputs:
             zf.write(filename, os.path.basename(filename))
 
