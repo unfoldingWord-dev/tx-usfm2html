@@ -8,11 +8,9 @@ import shutil
 import tempfile
 import zipfile
 from contextlib import closing
-from glob import glob
 
 import boto3
 from future.moves.urllib.request import urlopen
-from general_tools.file_utils import unzip
 
 from convert import convert
 
@@ -21,33 +19,37 @@ DEFAULT_CSS = os.path.join(here, "default.css")
 
 
 def handle(event, context):
-    data = retrieve(event, "data", "payload")
-    job = retrieve(data, "job", "\"data\"")
+    job = retrieve(event, "job", "payload")
     # source: URL of zip archive of input USFM files
     source = retrieve(job, "source", "\"job\"")
     # stylesheets: (optional) list of CSS filenames
     stylesheets = [os.path.basename(DEFAULT_CSS)]
     if "stylesheets" in job:
-        stylesheets += job["stylesheets"]
-    cdn_bucket = retrieve(data, "cdn_bucket", "\"data\"")
-    cdn_file = retrieve(data, "cdn_file", "\"data\"")
+        stylesheets.extend(job["stylesheets"])
+    upload = retrieve(event, "upload", "payload")
+    cdn_bucket = retrieve(upload, "cdn_bucket", "\"upload\"")
+    cdn_file = retrieve(upload, "cdn_file", "\"upload\"")
 
-    print('source: ' + source)
-    print('cdn_bucket: ' + cdn_bucket)
-    print('cdn_file: ' + cdn_file)
+    print('source: {}'.format(source))
+    print('stylesheets: {}'.format(stylesheets))
+    print('cdn_bucket: {}'.format(cdn_bucket))
+    print('cdn_file: {}'.format(cdn_file))
 
-    directory = tempfile.gettempdir()
+    download_dir = tempfile.mkdtemp("download")
+    scratch_dir = tempfile.mkdtemp("extracted")
 
     # download  and unzip the archive (source)
     basename = os.path.basename(source)
-    downloaded_file = os.path.join(directory, basename)
+    downloaded_file = os.path.join(download_dir, basename)
     download_file(source, downloaded_file)
-    unzip(downloaded_file, directory)
+    with zipfile.ZipFile(downloaded_file) as zf:
+        zf.extractall(scratch_dir)
 
-    inputs = glob(os.path.join(directory, '*.usfm'))
-    outputs = convert(inputs, output_dir=directory, stylesheets=stylesheets)
+    inputs = [filename for (root, dirs, filenames) in os.walk(scratch_dir)
+              for filename in filenames]
+    outputs = convert(inputs, output_dir=scratch_dir, stylesheets=stylesheets)
 
-    zip_file = os.path.join(tempfile.gettempdir(), context.aws_request_id+'.zip')
+    zip_file = os.path.join(scratch_dir, 'result.zip')
     with zipfile.ZipFile(zip_file, "w") as zf:
         zf.write(DEFAULT_CSS, os.path.basename(DEFAULT_CSS))
         for filename in outputs:
