@@ -42,7 +42,7 @@ def convert_single(usfm_filename, output_dir, stylesheets=(), input_encoding="ut
     output_basename = os.path.splitext(os.path.basename(usfm_filename))[0] + ".html"
     output_filename = os.path.join(output_dir, output_basename)
 
-    with codecs.open(output_filename, "w") as output_file:
+    with codecs.open(output_filename, "w", encoding="utf8") as output_file:
         HtmlVisitor(output_file, stylesheets=stylesheets).write(document)
 
     return [output_filename]

@@ -1,0 +1,4 @@
+[run]
+source =
+    functions/convert/main.py
+    functions/convert/convert.py

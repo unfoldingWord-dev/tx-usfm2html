@@ -1,16 +1,16 @@
 language: python
 python:
 - '2.7'
-- '3.3'
-- '3.4'
-- '3.5'
 install:
 - sudo apt-get install -y curl tar
 - curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sudo sh
-- pip install -r requirements.txt -t functions/convert
+- pip install -r functions/convert/requirements.txt
+- pip install -r test_requirements.txt
 - pip install coveralls
 script: coverage run setup.py test
-after_success: coveralls
+after_success:
+- coveralls
+- pip install -r functions/convert/requirements.txt -t functions/convert/
 deploy:
 - provider: script
   skip_cleanup: true
