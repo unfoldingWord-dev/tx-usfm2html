@@ -14,7 +14,7 @@ after_success:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: "apex deploy"
+  script: "apex deploy --env $TRAVIS_BRANCH"
   on:
     branch:
     - develop
